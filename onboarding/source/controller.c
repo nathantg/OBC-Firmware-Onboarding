@@ -127,7 +127,6 @@ static void lightTimerCallback(TimerHandle_t xTimer) {
         // CHANGE: send error message if event doesn't send successfully
         unsigned char errorText[] = "MEASURE_LIGHT event not successfully sent";
         sciPrintText(scilinREG, errorText, strlen((const char*) errorText));
-        return 0;
     }
 
     /* USER CODE END */

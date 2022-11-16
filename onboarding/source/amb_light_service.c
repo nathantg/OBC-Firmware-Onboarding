@@ -5,6 +5,7 @@
 #include <sci.h>
 
 #include <string.h>
+#include <stdio.h>
 
 
 /* USER CODE BEGIN */
@@ -67,9 +68,9 @@ static void lightServiceTask(void * pvParameters) {
             if(event == MEASURE_LIGHT) {
                 // if event recieved is MEASURE_LIGHT, get value from adc and send over serial
                 uint16_t data = getAmbientLightData(); // CHANGE: data now uint16_t since ADC is 12-bit
-                unsigned char adc_value[10]; 
-                sprintf(adc_value, "%d", data); // CHANGE: convert ADC integer value to char
-                sciPrintText(scilinREG, adc_value, sizeof(uint8_t));
+                char adc_value[50]; 
+                sprintf(adc_value, "%u\n", data); // CHANGE: convert ADC integer value to char
+                sciPrintText(scilinREG, (unsigned char*)adc_value, 13);
             }
         }
     }
@@ -109,7 +110,7 @@ void adcGetSingleData(adcBASE_t *adc, unsigned group, adcData_t *data) {
     ptr->value = (unsigned short)(buf & 0xFFFU);
     ptr->id = (unsigned short)((buf >> 16U) & 0x1FU);
 
-    adc->GxINTFLG[group] =9U;
+    adc->GxINTFLG[group] = 9U;
 }
 void adcStartConversion_selChn(adcBASE_t *adc, unsigned channel, unsigned fifo_size, unsigned group) {
     adc->GxINTCR[group] = fifo_size;
