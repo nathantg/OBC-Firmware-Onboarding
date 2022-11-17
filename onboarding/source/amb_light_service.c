@@ -68,9 +68,9 @@ static void lightServiceTask(void * pvParameters) {
             if(event == MEASURE_LIGHT) {
                 // if event recieved is MEASURE_LIGHT, get value from adc and send over serial
                 uint16_t data = getAmbientLightData(); // CHANGE: data now uint16_t since ADC is 12-bit
-                char adc_value[50]; 
+                char adc_value[50] = { 0 }; 
                 sprintf(adc_value, "%u\n", data); // CHANGE: convert ADC integer value to char
-                sciPrintText(scilinREG, (unsigned char*)adc_value, 13);
+                sciPrintText(scilinREG, (unsigned char *) adc_value, strlen((const char *) adc_value));
             }
         }
     }
